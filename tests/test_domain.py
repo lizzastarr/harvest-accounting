@@ -24,6 +24,9 @@ class HarvestTests(unittest.TestCase):
         with self.assertRaises(DomainError):
             self.make(crop="  ")
 
+    def test_crop_is_normalized(self):
+        self.assertEqual(self.make(crop="  пшениця ").crop, "Пшениця")
+
     def test_future_date_forbidden(self):
         with self.assertRaises(DomainError):
             self.make(harvest_date=date.today() + timedelta(days=1))

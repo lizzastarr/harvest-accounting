@@ -25,6 +25,9 @@ class Harvest:
     note: str = ""
 
     def __post_init__(self) -> None:
+        # нормалізація: «Пшениця » і «пшениця» мають бути однією культурою
+        self.crop = self.crop.strip().capitalize()
+        self.field = self.field.strip()
         if not self.crop.strip():
             raise DomainError("Назва культури не може бути порожньою")
         if not self.field.strip():
