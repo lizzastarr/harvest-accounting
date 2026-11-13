@@ -16,4 +16,4 @@ class ListHarvestsUseCase:
             items = [h for h in items if h.crop == crop.strip().capitalize()]
         if field:
             items = [h for h in items if h.field == field.strip()]
-        return items
+        return sorted(items, key=lambda h: h.harvest_date)
