@@ -1,0 +1,27 @@
+flowchart TB
+    subgraph P["Presentation (src/presentation)"]
+        CLI["cli.py — консольний інтерфейс"]
+        CR["composition.py — Dependency Injection"]
+    end
+    subgraph I["Infrastructure (src/infrastructure)"]
+        JR["JsonHarvestRepository"]
+        MR["InMemoryHarvestRepository"]
+        ST["settings.py"]
+    end
+    subgraph A["Application (src/application)"]
+        UC["Use cases: Add · List · Delete · Report"]
+    end
+    subgraph D["Domain (src/domain)"]
+        EN["Harvest, Grade, DomainError"]
+        IR["IHarvestRepository (інтерфейс)"]
+    end
+    CLI --> CR
+    CR --> UC
+    CR -.->|створює| JR
+    CR -.->|створює| MR
+    CR --> ST
+    UC --> IR
+    UC --> EN
+    JR -.->|реалізує| IR
+    MR -.->|реалізує| IR
+    IR --> EN
