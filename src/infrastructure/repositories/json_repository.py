@@ -35,9 +35,11 @@ class JsonHarvestRepository(IHarvestRepository):
         folder = os.path.dirname(self._path)
         if folder:
             os.makedirs(folder, exist_ok=True)
-        with open(self._path, "w", encoding="utf-8") as f:
+        tmp_path = self._path + ".tmp"
+        with open(tmp_path, "w", encoding="utf-8") as f:
             json.dump([self._to_dict(h) for h in items.values()], f,
                       ensure_ascii=False, indent=2)
+        os.replace(tmp_path, self._path)  # атомарна заміна файлу
 
     # --- IHarvestRepository ---
     def add(self, harvest: Harvest) -> None:
