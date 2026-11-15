@@ -9,6 +9,7 @@ class Settings:
     app_name: str
     storage_type: str
     storage_path: Optional[str]
+    log_level: str = "WARNING"
 
 
 def load_settings(path: str = "appsettings.json") -> Settings:
@@ -16,4 +17,5 @@ def load_settings(path: str = "appsettings.json") -> Settings:
         raw = json.load(f)
     storage = raw.get("storage", {})
     return Settings(raw.get("app_name", "Облік урожаю"),
-                    storage.get("type", "memory"), storage.get("path"))
+                    storage.get("type", "memory"), storage.get("path"),
+                    raw.get("log_level", "WARNING"))
